@@ -3,7 +3,7 @@ import './app.css';
 const app = document.querySelector('#app');
 const MIN = 1;
 const MAX = 7;
-const COUNT = 5;
+const COUNT = 4;
 const random = (min, max) => (Math.floor(Math.random()*((max-min)+1))+min);
 const getRandom = () => random(MIN, MAX);
 const formatter = new Intl.NumberFormat('en-GB');
@@ -24,18 +24,6 @@ const createContainer = (label = '{label}') => {
   node.classList.add(label);
   return node;
 };
-
-const board = createContainer('board');
-app.appendChild(board);
-
-const display = createContainer('display');
-display.innerText = 0;
-board.appendChild(display);
-
-const holder = createContainer('holder');
-board.appendChild(holder);
-
-const sliders = Array.from({length: COUNT}).map(() => createSlider());
 
 const renderTotal = () => {
   display.innerText = formatNumber(target.value-getTotal());
@@ -70,16 +58,28 @@ const getTotal = () => {
   return bob;
 };
 
-sliders.forEach((slider) => {
-  holder.appendChild(slider);
-  slider.addEventListener('input', () => {
-    renderTotal();
-  });
-});
-
+const sliders = Array.from({length: COUNT}).map(() => createSlider());
 const multipliers = getMultipliers();
 const target = generateTarget();
 console.log(multipliers);
 console.log(target);
+
+const board = createContainer('board');
+app.appendChild(board);
+
+const display = createContainer('display');
+display.innerText = 0;
+board.appendChild(display);
+
+const holder = createContainer('holder');
+board.appendChild(holder);
+
+sliders.forEach((slider) => {
+  holder.appendChild(slider);
+  slider.value = getRandom();
+  slider.addEventListener('input', () => {
+    renderTotal();
+  });
+});
 
 renderTotal();
