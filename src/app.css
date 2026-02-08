@@ -111,7 +111,6 @@ input[type="checkbox"] {
   border-radius: 5px;
   cursor: pointer;
   &:checked {
-    /* background-color: var(--foreground); */
     background-color: rgb(245, 0, 0);
   }
 }
@@ -125,17 +124,33 @@ input[type="checkbox"] {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 5px;
+  
   &[data-active="false"] {
     display: none;
   }
+
+  .stats {
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .continue {
+    padding-top: 20px;
+    font-size: 17px;
+  }
+
 }
 
 .teller {
   text-align: center;
+  &[data-active="false"] {
+    opacity: 0;
+  }
 }
 
 h2 {
   text-transform: uppercase;
   font-weight: 800;
-  font-size: 24px;
+  font-size: 26px;
 }

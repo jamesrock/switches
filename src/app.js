@@ -15,6 +15,10 @@ const shuffle = (array) => {
   };
   return array;
 };
+const timeToMinutes = (time) => Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
+const timeToSeconds = (time) => Math.floor((time % (1000 * 60)) / 1000);
+const pad = (time) => time.toString().padStart(2, '0');
+const timeToDisplay = (time) => `${pad(timeToMinutes(time))}:${pad(timeToSeconds(time))}`;
 
 const createSwitch = () => {
   const node = document.createElement('input');
@@ -34,6 +38,14 @@ const renderTotal = () => {
     switches.forEach((s) => {
       s.disabled = true;
     });
+    const duration = (Date.now() - time);
+    gameOver.innerHTML = `\
+      <h2>Solved!</h2>\
+      <div class="stats">\
+        <p class="time">Time: ${timeToDisplay(duration)}</p>\
+        <p class="moves">Moves: ${moves}</p>\
+      </div>\
+      <p class="continue">Tap to continue.</p>`;
     setTimeout(() => {
       gameOver.dataset.active = true;
     }, 500);
@@ -83,11 +95,14 @@ const getTotal = () => {
 
 const switches = Array.from({length: COUNT}).map(() => createSwitch());
 let settings = null;
+let moves = 0;
+let time = null;
 
 const board = createContainer('board');
 app.appendChild(board);
 
 const teller = createContainer('teller');
+teller.dataset.active = false;
 board.appendChild(teller);
 
 const display = createContainer('display');
@@ -99,7 +114,6 @@ board.appendChild(holder);
 
 const gameOver = createContainer('game-over');
 gameOver.dataset.active = false;
-gameOver.innerHTML = `<h2>Well done!</h2><p>Tap to start new game.</p>`;
 board.appendChild(gameOver);
 
 const newGame = () => {
@@ -116,6 +130,9 @@ const newGame = () => {
   });
 
   gameOver.dataset.active = false;
+
+  moves = 0;
+  time = Date.now();
   
   renderTotal();
 
@@ -123,13 +140,19 @@ const newGame = () => {
 
 switches.forEach((s) => {
   holder.appendChild(s);
-  s.addEventListener('input', () => {
-    renderTotal();
-  });
+});
+
+board.addEventListener('input', () => {
+  moves ++;
+  renderTotal();
 });
 
 gameOver.addEventListener('click', () => {
   newGame();
+});
+
+teller.addEventListener('click', () => {
+  teller.dataset.active = true;
 });
 
 newGame();
