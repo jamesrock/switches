@@ -106,7 +106,7 @@ const newGame = () => {
   
   settings = generateSettings();
 
-  teller.innerText = JSON.stringify(settings.values);
+  teller.innerHTML = `<div>${JSON.stringify(settings.values)}</div><div>${JSON.stringify(settings.multipliers)}</div>`;
 
   console.log(settings);
 
@@ -121,9 +121,9 @@ const newGame = () => {
 
 };
 
-switches.forEach((slider, index) => {
-  holder.appendChild(slider);
-  slider.addEventListener('input', () => {
+switches.forEach((s) => {
+  holder.appendChild(s);
+  s.addEventListener('input', () => {
     renderTotal();
   });
 });
