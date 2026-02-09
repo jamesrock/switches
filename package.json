@@ -11,5 +11,8 @@
   },
   "devDependencies": {
     "vite": "^7.2.4"
+  },
+  "dependencies": {
+    "@jamesrock/rockjs": "^1.0.0"
   }
 }

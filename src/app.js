@@ -1,24 +1,14 @@
+import { 
+  timeToDisplay, 
+  shuffle, 
+  formatNumber, 
+  pluckRandom, 
+  random
+} from '@jamesrock/rockjs';
 import './app.css';
 
 const app = document.querySelector('#app');
 const COUNT = 9;
-const random = (min, max) => (Math.floor(Math.random()*((max-min)+1))+min);
-const pluckRandom = (a) => (a.splice(random(0, a.length-1), 1)[0]);
-const formatter = new Intl.NumberFormat('en-GB');
-const formatNumber = (n) => formatter.format(n);
-const shuffle = (array) => {
-  for(let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    const temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
-  };
-  return array;
-};
-const timeToMinutes = (time) => Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
-const timeToSeconds = (time) => Math.floor((time % (1000 * 60)) / 1000);
-const pad = (time) => time.toString().padStart(2, '0');
-const timeToDisplay = (time) => `${pad(timeToMinutes(time))}:${pad(timeToSeconds(time))}`;
 
 const createSwitch = () => {
   const node = document.createElement('input');
