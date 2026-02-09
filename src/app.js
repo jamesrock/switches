@@ -1,5 +1,5 @@
 import { 
-  timeToDisplay, 
+  formatTime, 
   shuffle, 
   formatNumber, 
   pluckRandom, 
@@ -28,7 +28,7 @@ const renderTotal = () => {
     gameOver.innerHTML = `\
       <h2>Solved!</h2>\
       <div class="stats">\
-        <p class="time">Time: ${timeToDisplay(duration)}</p>\
+        <p class="time">Time: ${formatTime(duration)}</p>\
         <p class="moves">Moves: ${moves}</p>\
       </div>\
       <p class="continue">Tap to continue.</p>`;
