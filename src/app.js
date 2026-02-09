@@ -3,7 +3,9 @@ import {
   shuffle, 
   formatNumber, 
   pluckRandom, 
-  random
+  random,
+  createContainer,
+  makeArray
 } from '@jamesrock/rockjs';
 import './app.css';
 
@@ -13,12 +15,6 @@ const COUNT = 9;
 const createSwitch = () => {
   const node = document.createElement('input');
   node.type = 'checkbox';
-  return node;
-};
-
-const createContainer = (label = '{label}') => {
-  const node = document.createElement('div');
-  node.classList.add(label);
   return node;
 };
 
@@ -53,9 +49,9 @@ const getMultipliers = () => {
 };
 
 const getValues = () => {
-  const values = Array.from({length: COUNT}).map(() => 0);
-  const bob = Array.from({length: COUNT}).map((a, index) => index);
-  Array.from({length: random(2, 8)}).forEach(() => {
+  const values = makeArray(COUNT, () => 0);
+  const bob = makeArray(COUNT, (a, index) => index);
+  makeArray(random(2, 8)).forEach(() => {
     values[pluckRandom(bob)] = 1;
   });
   return values;
@@ -83,7 +79,7 @@ const getTotal = () => {
   return bob;
 };
 
-const switches = Array.from({length: COUNT}).map(() => createSwitch());
+const switches = makeArray(COUNT, () => createSwitch());
 let settings = null;
 let moves = 0;
 let time = null;
