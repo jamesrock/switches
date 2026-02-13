@@ -21,28 +21,31 @@ const createSwitch = () => {
 const renderTotal = () => {
   const total = settings.value-getTotal();
   if(total===0) {
-    switches.forEach((s) => {
-      s.disabled = true;
-    });
-    const duration = (Date.now() - time);
-    gameOver.innerHTML = `\
-      <h2>Solved!</h2>\
-      <div class="stats">\
-        <p class="time">Time: ${formatTime(duration)}</p>\
-        <p class="moves">Moves: ${moves}</p>\
-      </div>\
-      <p class="continue">Tap to continue.</p>`;
     setTimeout(() => {
-      gameOver.dataset.active = true;
+      showGameOverScreen();
     }, 500);
   };
   display.innerHTML = `<div class="display-inner"><span class="sign">${total===0 ? '&nbsp;' : (total<0 ? '&#9650;' : '&#9660;')}</span><span>${formatNumber(total<0 ? total*-1 : total)}</span></div>`;
 };
 
+const showGameOverScreen = () => {
+  switches.forEach((s) => {
+    s.disabled = true;
+  });
+  const duration = (Date.now() - time);
+  gameOver.innerHTML = `\
+    <h2>Solved!</h2>\
+    <div class="stats">\
+      <p class="time">Time: ${formatTime(duration)}</p>\
+      <p class="moves">Moves: ${moves}</p>\
+    </div>\
+    <p class="continue">Tap to continue</p>`;
+  gameOver.dataset.active = true;
+};
+
 const getMultipliers = () => {
   const multipliers = [];
   switches.forEach((s, index) => {
-    // console.log((index)*10+1, ((index)*10)+10);
     multipliers.push(random((index)*10+1, ((index)*10)+10));
   });
   return shuffle(multipliers);
