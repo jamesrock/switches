@@ -1,18 +1,19 @@
 {
   "name": "vite-sliders",
-  "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "host": "vite --host",
     "build": "vite build",
-    "preview": "vite preview",
-    "host": "vite --host"
+    "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^7.2.4"
+    "vite": "^7.3.1"
   },
   "dependencies": {
-    "@jamesrock/rockjs": "^1.0.0"
-  }
+    "@jamesrock/rockjs": "^1.9.0"
+  },
+  "author": "James Rock",
+  "license": "ISC"
 }
