@@ -26,6 +26,13 @@
   src: url('/fonts/Poppins-ExtraBold.ttf');
 }
 
+@font-face {
+  font-family: 'Poppins';
+  font-weight: 900;
+  font-style: italic;
+  src: url('/fonts/Poppins-BlackItalic.ttf');
+}
+
 :root {
   --background: floralwhite;
   --foreground: #171717;
