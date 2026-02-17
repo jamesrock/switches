@@ -1,4 +1,6 @@
-import { 
+import './app.css';
+import {
+  setDocumentHeight,
   formatTime, 
   shuffle, 
   formatNumber, 
@@ -7,7 +9,8 @@ import {
   createContainer,
   makeArray
 } from '@jamesrock/rockjs';
-import './app.css';
+
+setDocumentHeight();
 
 const app = document.querySelector('#app');
 const COUNT = 9;
@@ -92,7 +95,7 @@ app.appendChild(board);
 
 const teller = createContainer('teller');
 teller.dataset.active = false;
-board.appendChild(teller);
+// board.appendChild(teller);
 
 const display = createContainer('display');
 display.innerText = 0;

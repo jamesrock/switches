@@ -34,16 +34,15 @@
 }
 
 :root {
-  --background: floralwhite;
+  --background: beige;
   --foreground: #171717;
   --switch-size: 70px;
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
+  @media (prefers-color-scheme: dark) {
     --background: #171717;
     --foreground: floralwhite;
   }
+  
 }
 
 * {
@@ -56,27 +55,23 @@ html {
 }
 
 body {
-  font-family: 'Poppins';
+  font-family: 'Poppins', sans-serif;
   background-color: var(--background);
   color: var(--foreground);
   font-weight: 500;
   font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-#app {
-  display: flex;
-  align-items: end;
-  justify-content: center;
-  height: 100dvh;
 }
 
 .holder {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-  padding-bottom: 50px;
   justify-content: center;
 }
 
