@@ -17,6 +17,9 @@ setDocumentHeight();
 
 const app = document.querySelector('#app');
 const COUNT = 9;
+const yGap = 5;
+const xGap = 5;
+const itemSize = 50;
 
 const makeIndex = (items, key = 'id') => {
   const out = {};
@@ -25,6 +28,18 @@ const makeIndex = (items, key = 'id') => {
   });
   return out;
 };
+
+const xPositions = [0, 1, 2, 0, 1, 2, 0, 1, 2].map((index) => {
+  return (index * (itemSize + xGap));
+});
+
+const yPositions = [0, 0, 0, 1, 1, 1, 2, 2, 2].map((index) => {
+  return (index * (itemSize + yGap));
+});
+
+const positions = makeArray(COUNT).map((index) => {
+  return [xPositions[index], yPositions[index]];
+});
 
 class Item extends DisplayObject {
   constructor(id, weight) {
@@ -35,6 +50,7 @@ class Item extends DisplayObject {
     this.weight = weight;
     this.node = makeNode('div', 'item');
 
+    this.resetPosition();
     this.setProp('id', this.id);
 
   };
@@ -42,6 +58,16 @@ class Item extends DisplayObject {
 
     this.dropped = a;
     this.setProp('dropped', this.dropped);
+    return this;
+
+  };
+  resetPosition() {
+
+    console.log('resetPosition');
+
+    const [x, y] = positions[this.id];
+
+    this.setPosition(x, y);
     return this;
 
   };
@@ -69,7 +95,7 @@ const renderTotal = () => {
       showGameOverScreen();
     }, 500);
   };
-  display.innerHTML = `<div class="display-inner"><span class="sign">${total===0 ? '&nbsp;' : (total<0 ? '&#9650;' : '&#9660;')}</span><span>${formatNumber(total<0 ? total*-1 : total)}</span></div>`;
+  display.innerHTML = `<div class="display-inner"><span class="sign">${total===0 ? '&nbsp;' : (total<0 ? '&#9650;' : '&#9660;')}</span><span>${formatNumber(total<0 ? total*-1 : total)}</span><span class="unit">kg</span></div>`;
 };
 
 const showGameOverScreen = () => {
@@ -135,18 +161,18 @@ let time = null;
 const board = makeContainer('board');
 app.appendChild(board);
 
-const teller = makeContainer('teller');
-teller.dataset.active = false;
-// board.appendChild(teller);
-
 const display = makeContainer('display');
 display.innerText = 0;
-board.appendChild(display);
 
-const holder = makeContainer('holder');
-board.appendChild(holder);
+const tray = makeContainer('tray');
+board.appendChild(tray);
+
+tray.style.width = tray.style.height = `${itemSize * 3 + (xGap * 2)}px`;
 
 const scales = makeContainer('scales');
+const platform = makeContainer('platform');
+scales.appendChild(display);
+scales.appendChild(platform);
 board.appendChild(scales);
 
 const gameOver = makeContainer('game-over');
@@ -167,13 +193,10 @@ const newGame = () => {
   itemMap = makeIndex(items);
 
   console.log(items);
-
-  teller.innerHTML = `<div>${JSON.stringify(settings.values)}</div><div>${JSON.stringify(settings.multipliers)}</div>`;
-
   console.log(settings);
 
   items.forEach((item) => {
-    item.appendTo(holder);
+    item.appendTo(tray);
   });
 
   gameOver.dataset.active = false;
@@ -185,16 +208,8 @@ const newGame = () => {
 
 };
 
-board.addEventListener('input', () => {
-
-});
-
 gameOver.addEventListener('click', () => {
   newGame();
-});
-
-teller.addEventListener('click', () => {
-  teller.dataset.active = true;
 });
 
 newGame();
@@ -207,8 +222,6 @@ interact('.item').draggable({
 		start(event) {
 
       position = { x: event.target.offsetLeft, y: event.target.offsetTop };
-
-      console.log(event.target.dataset.id);
 
       group = [itemMap[event.target.dataset.id]];
       console.log(group);
@@ -230,7 +243,7 @@ interact('.item').draggable({
 	}
 });
 
-interact('.scales').dropzone({
+interact('.platform').dropzone({
 	accept: '.item',
 	ondrop: (event) => {
 
@@ -244,12 +257,12 @@ interact('.scales').dropzone({
 	}
 });
 
-interact('.items').dropzone({
+interact('body').dropzone({
 	accept: '.item',
 	ondrop: (event) => {
 
     group.forEach((item) => {
-      item.setDropped(true).setChecked(false);
+      item.setDropped(true).setChecked(false).resetPosition();
     });
 
     moves ++;

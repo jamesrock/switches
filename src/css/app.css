@@ -36,7 +36,7 @@
 :root {
   --background: beige;
   --foreground: #171717;
-  --switch-size: 70px;
+  --item-size: 50px;
 
   @media (prefers-color-scheme: dark) {
     --background: #171717;
@@ -68,50 +68,36 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.holder {
+.board {
   display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  justify-content: center;
+  align-items: end;
+  gap: 20px;
+  position: relative;
 }
 
-.display {
-  font-size: 80px;
-  text-align: center;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-  .sign {
-    font-size: 30px;
-    position: absolute;
-    left: -40px;
-    top: 30px;
-  }
+.tray {
+  width: 100px;
+  height: 300px;
+  flex-shrink: 0;
+  position: relative;
 }
 
 .display-inner {
   position: relative;
 }
 
-.board {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  width: 100%;
-  max-width: 250px;
-  position: relative;
-}
-
 .item {
-  width: var(--switch-size);
-  height: var(--switch-size);
+  width: var(--item-size);
+  height: var(--item-size);
   background-color: white;
-  border: solid 4px var(--foreground);
+  border: solid 2px var(--foreground);
   border-radius: 5px;
   cursor: pointer;
   position: absolute;
+  box-sizing: border-box;
+  &[data-dropped="true"] {
+    transition: all .25s;
+  }
 }
 
 .game-over {
@@ -141,13 +127,6 @@ body {
 
 }
 
-.teller {
-  text-align: center;
-  &[data-active="false"] {
-    opacity: 0;
-  }
-}
-
 h2 {
   text-transform: uppercase;
   font-weight: 800;
@@ -155,7 +134,36 @@ h2 {
 }
 
 .scales {
-  width: 300px;
-  height: 300px;
-  background-color: white;
+  background-color: magenta;
+  border-radius: 30px;
+  padding: 10px;
+  .display {
+    font-size: 80px;
+    text-align: center;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 10px 0 10px;
+    color: white;
+    .sign {
+      font-size: 25px;
+      position: absolute;
+      left: -40px;
+      top: 35px;
+    }
+    .unit {
+      font-size: 50%;
+      position: absolute;
+      right: -55px;
+      top: 30px;
+    }
+  }
+  .platform {
+    width: 300px;
+    height: 300px;
+    background-color: cyan;
+    border-radius: 20px;
+  }
 }
