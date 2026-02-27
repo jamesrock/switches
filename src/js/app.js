@@ -15,11 +15,16 @@ import interact from 'interactjs';
 
 setDocumentHeight();
 
+const root = document.documentElement;
 const app = document.querySelector('#app');
 const COUNT = 9;
 const yGap = 5;
 const xGap = 5;
-const itemSize = 50;
+const itemWidth = 100;
+const itemHeight = 50;
+
+root.style.setProperty('--item-width', `${itemWidth}px`);
+root.style.setProperty('--item-height', `${itemHeight}px`);
 
 const makeIndex = (items, key = 'id') => {
   const out = {};
@@ -30,11 +35,11 @@ const makeIndex = (items, key = 'id') => {
 };
 
 const xPositions = [0, 1, 2, 0, 1, 2, 0, 1, 2].map((index) => {
-  return (index * (itemSize + xGap));
+  return (index * (itemWidth + xGap));
 });
 
 const yPositions = [0, 0, 0, 1, 1, 1, 2, 2, 2].map((index) => {
-  return (index * (itemSize + yGap));
+  return (index * (itemHeight + yGap));
 });
 
 const positions = makeArray(COUNT).map((index) => {
@@ -49,6 +54,8 @@ class Item extends DisplayObject {
     this.id = id;
     this.weight = weight;
     this.node = makeNode('div', 'item');
+
+    this.node.innerHTML = `${weight}<span class="unit">kg</span>`;
 
     this.resetPosition();
     this.setProp('id', this.id);
@@ -167,7 +174,8 @@ display.innerText = 0;
 const tray = makeContainer('tray');
 board.appendChild(tray);
 
-tray.style.width = tray.style.height = `${itemSize * 3 + (xGap * 2)}px`;
+tray.style.width = `${itemWidth * 3 + (xGap * 2)}px`;
+tray.style.height = `${itemHeight * 3 + (yGap * 2)}px`;
 
 const scales = makeContainer('scales');
 const platform = makeContainer('platform');
@@ -226,7 +234,7 @@ interact('.item').draggable({
       group = [itemMap[event.target.dataset.id]];
       console.log(group);
 
-			group.forEach((item, index) => {
+			group.forEach((item) => {
         item.setDropped(false);
 			});
 
@@ -235,7 +243,7 @@ interact('.item').draggable({
 
 			position.x += event.dx;
 			position.y += event.dy;
-			group.forEach((item, index) => {
+			group.forEach((item) => {
 				item.setPosition((position.x), (position.y));
       });
 
@@ -245,7 +253,7 @@ interact('.item').draggable({
 
 interact('.platform').dropzone({
 	accept: '.item',
-	ondrop: (event) => {
+	ondrop: () => {
 
     group.forEach((item) => {
       item.setDropped(true).setChecked(true);
@@ -259,7 +267,7 @@ interact('.platform').dropzone({
 
 interact('body').dropzone({
 	accept: '.item',
-	ondrop: (event) => {
+	ondrop: () => {
 
     group.forEach((item) => {
       item.setDropped(true).setChecked(false).resetPosition();
