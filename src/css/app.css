@@ -42,7 +42,7 @@
     --background: #171717;
     --foreground: floralwhite;
   }
-  
+
 }
 
 * {
@@ -104,17 +104,14 @@ body {
   position: relative;
 }
 
-input[type="checkbox"] {
+.item {
   width: var(--switch-size);
   height: var(--switch-size);
-  appearance: none;
   background-color: white;
   border: solid 4px var(--foreground);
   border-radius: 5px;
   cursor: pointer;
-  &:checked {
-    background-color: rgb(245, 0, 0);
-  }
+  position: absolute;
 }
 
 .game-over {
@@ -127,7 +124,7 @@ input[type="checkbox"] {
   align-items: center;
   justify-content: center;
   gap: 5px;
-  
+
   &[data-active="false"] {
     display: none;
   }
@@ -155,4 +152,10 @@ h2 {
   text-transform: uppercase;
   font-weight: 800;
   font-size: 26px;
+}
+
+.scales {
+  width: 300px;
+  height: 300px;
+  background-color: white;
 }
