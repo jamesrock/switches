@@ -166,26 +166,21 @@ let moves = 0;
 let time = null;
 
 const board = makeContainer('board');
-app.appendChild(board);
-
 const display = makeContainer('display');
-display.innerText = 0;
-
 const tray = makeContainer('tray');
-board.appendChild(tray);
+const scales = makeContainer('scales');
+const platform = makeContainer('platform');
+const gameOver = makeContainer('game-over');
 
 tray.style.width = `${itemWidth * 3 + (xGap * 2)}px`;
 tray.style.height = `${itemHeight * 3 + (yGap * 2)}px`;
 
-const scales = makeContainer('scales');
-const platform = makeContainer('platform');
 scales.appendChild(display);
 scales.appendChild(platform);
 board.appendChild(scales);
-
-const gameOver = makeContainer('game-over');
-gameOver.dataset.active = false;
+board.appendChild(tray);
 board.appendChild(gameOver);
+app.appendChild(board);
 
 const newGame = () => {
 
